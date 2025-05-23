@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMA University - Next-Gen Certifications</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --ama-red: #cc0000;
+            --ama-dark-red: #990000;
+            --ama-bright-red: #ff3333;
+            --ama-blue: #1a1a2e;
+            --ama-dark-blue: #0f0f1f;
+            --ama-cyan: #00ffff;
+            --ama-purple: #6600cc;
+            --ama-silver: #c0c0c0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--ama-dark-blue) 0%, var(--ama-blue) 50%, #1a0d1a 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(204, 0, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(204, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -2;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero-section {
+            padding: 4rem 0 3rem;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(204, 0, 0, 0.2) 0%, transparent 70%);
+        }
+
+        .neon-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--ama-red), var(--ama-cyan), var(--ama-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(204, 0, 0, 0.5);
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.3); }
+        }
+
+        .tech-subtitle {
+            font-size: 1.2rem;
+            color: var(--ama-cyan);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .cert-panel {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(15, 15, 31, 0.9) 100%);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .cert-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--ama-red), var(--ama-cyan), var(--ama-purple), var(--ama-red));
+            background-size: 400% 400%;
+            border-radius: 20px;
+            opacity: 0;
+            z-index: -1;
+            animation: gradientShift 6s ease infinite;
+            transition: opacity 0.4s ease;
+        }
+
+        .cert-panel:hover::before {
+            opacity: 0.3;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cert-panel:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(204, 0, 0, 0.3);
+        }
+
+        .partner-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--ama-red), var(--ama-bright-red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(204, 0, 0, 0.5);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .partner-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--ama-cyan);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cert-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cert-item {
+            background: rgba(204, 0, 0, 0.1);
+            margin-bottom: 0.8rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--ama-red);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cert-item:hover::before {
+            left: 100%;
+        }
+
+        .cert-item:hover {
+            background: rgba(204, 0, 0, 0.2);
+            border-left-color: var(--ama-cyan);
+            transform: translateX(5px);
+        }
+
+        .cert-name {
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-banner {
+            background: linear-gradient(90deg, var(--ama-red), var(--ama-dark-red), var(--ama-red));
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: scanLine 3s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            display: block;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--ama-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.1;
+            color: var(--ama-red);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .neon-title { font-size: 2.5rem; }
+            .cert-grid { grid-template-columns: 1fr; padding: 0 1rem 2rem; }
+            .cert-panel { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="floating-icons">
+        <i class="fas fa-microchip floating-icon" style="top: 15%; left: 10%; font-size: 2rem; animation-delay: 0s;"></i>
+        <i class="fas fa-robot floating-icon" style="top: 25%; right: 15%; font-size: 1.8rem; animation-delay: -2s;"></i>
+        <i class="fas fa-brain floating-icon" style="top: 65%; left: 5%; font-size: 2.2rem; animation-delay: -4s;"></i>
+        <i class="fas fa-rocket floating-icon" style="top: 75%; right: 8%; font-size: 1.5rem; animation-delay: -1s;"></i>
+    </div>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="neon-title">NEXT-GEN TECH CERTIFICATIONS</h1>
+            <p class="tech-subtitle">AMA University • Future-Ready Programs</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="cert-grid">
+            <!-- CompTIA Panel -->
+            <div class="cert-panel">
+                <div class="partner-logo">CT</div>
+                <h2 class="partner-name">CompTIA</h2>
+                <ul class="cert-list">
+                    <li class="cert-item"><div class="cert-name">ITF+ • Foundation</div></li>
+                    <li class="cert-item"><div class="cert-name">Cloud Essentials+ • Cloud Computing</div></li>
+                    <li class="cert-item"><div class="cert-name">Security+ • Cybersecurity Core</div></li>
+                    <li class="cert-item"><div class="cert-name">CySA+ • Threat Analysis</div></li>
+                </ul>
+            </div>
+
+            <!-- EC-Council Panel -->
+            <div class="cert-panel">
+                <div class="partner-logo">EC</div>
+                <h2 class="partner-name">EC-Council</h2>
+                <ul class="cert-list">
+                    <li class="cert-item"><div class="cert-name">Ethical Hacking Essentials</div></li>
+                    <li class="cert-item"><div class="cert-name">Threat Intelligence Essentials</div></li>
+                    <li class="cert-item"><div class="cert-name">Network Defense Essentials</div></li>
+                </ul>
+            </div>
+
+            <!-- Cisco Panel -->
+            <div class="cert-panel">
+                <div class="partner-logo">CS</div>
+                <h2 class="partner-name">Cisco NetAcad</h2>
+                <ul class="cert-list">
+                    <li class="cert-item"><div class="cert-name">CCNA • Network Associate</div></li>
+                    <li class="cert-item"><div class="cert-name">CCNAS • Network Security</div></li>
+                    <li class="cert-item"><div class="cert-name">DevNet • Software Development</div></li>
+                    <li class="cert-item"><div class="cert-name">CyberOps • Security Operations</div></li>
+                    <li class="cert-item"><div class="cert-name">Linux • System Administration</div></li>
+                    <li class="cert-item"><div class="cert-name">C++ • Advanced Programming</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <section class="stats-banner">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">20</span>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <div class="stat-label">Tech Partners</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">13</span>
+                    <div class="stat-label">Cisco Courses</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <div class="stat-label">Industry Ready</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced hover effects
+        document.querySelectorAll('.cert-panel').forEach(panel => {
+            panel.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.03)';
+                this.style.boxShadow = '0 25px 50px rgba(204, 0, 0, 0.4)';
+            });
+            
+            panel.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Parallax floating icons
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelectorAll('.floating-icon').forEach((icon, index) => {
+                const speed = 0.3 + (index * 0.1);
+                icon.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Dynamic grid pulse based on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
+            const grid = document.querySelector('.cyber-grid');
+            grid.style.opacity = 0.3 + (scrollPercent * 0.3);
+        });
+    </script>
+</body>
+</html>
